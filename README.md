@@ -1,4 +1,3 @@
-**Descrição do Projeto**
 Este repositório apresenta um **sistema de folha de pagamento demo** implementado em SQL Server. O objetivo principal é demonstrar, de forma organizada e didática, como estruturar um banco de dados para controle de funcionários e cargos, implementar tabelas auxiliares com faixas de cálculo (INSS, IRRF etc.), desenvolver *stored procedures* para calcular proventos e descontos, criar *triggers* para auditoria e fornecer um procedimento principal que gera o contracheque completo de cada colaborador.
 
 O projeto é composto pelos seguintes scripts (ordenados de uso):
