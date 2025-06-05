@@ -68,7 +68,7 @@ Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em 
 
 5. **Gerenciamento de Transações e Controle de Erros**
 
-   * Embora não tenha havido implementação explícita de `TRY… CATCH` neste projeto, o entendimento prático do aluno sobre como transações devem ser utilizadas para garantir atomicidade em operações críticas foi reforçado pelo professor durante as aulas.
+   * Embora não tenha havido implementação explícita de `TRY… CATCH` neste projeto, o entendimento prático sobre como transações devem ser utilizadas para garantir atomicidade em operações críticas foi reforçado pelo professor durante as aulas.
 
 ---
 
@@ -105,7 +105,7 @@ Durante a disciplina, foram identificados pontos de **hard code** (código fixo)
    * O emprego de cursores para iterar sobre a tabela `FUNCIONARIOS` facilita o entendimento didático, porém, em grandes volumes de dados, pode comprometer a performance.
    * **Sugestão de refatoração**: quando possível, substituir cursores por operações em lote (set-based), usando *joins* entre tabelas temporárias e *stored procedures* inline para gerar todos os cálculos de uma vez, aumentando eficiência.
 
-Em síntese, a adoção de **hard code** em certos pontos — valores de dedução, percentuais fixos e regras de negócio embarcadas diretamente em *procedures* — demonstrou ao aluno a importância de isolar parâmetros do código-fonte para obter flexibilidade e facilitar manutenções. Identificar essas limitações técnicas e propor soluções foi parte fundamental do processo pedagógico da disciplina.
+Em síntese, a adoção de **hard code** em certos pontos — valores de dedução, percentuais fixos e regras de negócio embarcadas diretamente em *procedures*, demonstrou a importância de isolar parâmetros do código-fonte para obter flexibilidade e facilitar manutenções. Identificar essas limitações técnicas e propor soluções foi parte fundamental do processo pedagógico da disciplina.
 
 ---
 
