@@ -73,6 +73,7 @@ Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em 
 ---
 
 **5. Análise Crítica de Hard Code e Lições Aprendidas**
+
 Durante a disciplina, foram identificados pontos de **hard code** (código fixo) que, embora funcionem para cenários acadêmicos, podem comprometer a manutenibilidade em cenários corporativos mais complexos:
 
 1. **Valores de Dedução por Dependente no IRRF**
