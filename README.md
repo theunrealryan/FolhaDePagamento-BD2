@@ -1,6 +1,6 @@
 **1. Introdução e Contextualização Acadêmica**
 
-Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em T-SQL para Microsoft SQL Server como parte da segunda avaliação da disciplina **Banco de Dados 2**, ministrada no **Quarto Período do Bacharelado em Engenharia de Software** na **Universidade do Estado do Pará (UEPA)**. A estruturação deste trabalho visou não apenas consolidar conteúdos teóricos de modelagem de banco de dados, mas também preparar o aluno para demandas reais do mercado de trabalho na área de TI, ao enfatizar aspectos de projeto, implementação e manutenção de sistemas de gerenciamento de dados corporativos.
+Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em T-SQL para Microsoft SQL Server como segunda avaliação da disciplina **Banco de Dados 2**, ministrada no **Quarto Período do Bacharelado em Engenharia de Software** na **Universidade do Estado do Pará (UEPA)**. A estruturação deste trabalho visou não apenas consolidar conteúdos teóricos de modelagem de banco de dados, mas também preparar o aluno para demandas reais do mercado de trabalho na área de TI, ao enfatizar aspectos de projeto, implementação e manutenção de sistemas de gerenciamento de dados corporativos.
 
 ---
 
