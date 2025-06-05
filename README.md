@@ -112,7 +112,7 @@ Em síntese, a adoção de **hard code** em certos pontos — valores de deduç�
 **6. Diagrama Entidade-Relacionamento (DER)**
 Na imagem abaixo, está representado o **Diagrama Entidade-Relacionamento (DER)** do banco de dados usado no projeto de folha de pagamento. Esse DER ilustra a estrutura de tabelas, seus principais atributos e os relacionamentos que garantem a integridade referencial:
 
-![DER do Projeto de Folha de Pagamento](sandbox:/mnt/data/00132a3f-a470-4dbd-bdca-f8a6b3f94dda.png)
+![Captura de tela 2025-06-04 210612](https://github.com/user-attachments/assets/61dc50f1-29d6-41f8-9ac0-71590c3b955e)
 
 1. **FUNCIONARIOS**
 
@@ -166,8 +166,6 @@ Na imagem abaixo, está representado o **Diagrama Entidade-Relacionamento (DER)*
 
      * `matricula` → `FUNCIONARIOS.MATRICULA` (FK): armazena um registro de auditoria sempre que um novo funcionário é inserido em **FUNCIONARIOS** (via a *trigger* `trg_log_insert_func`).
     
-![Captura de tela 2025-06-04 210612](https://github.com/user-attachments/assets/61dc50f1-29d6-41f8-9ac0-71590c3b955e)
-
 > **Observações do DER:**
 >
 > * As linhas entre tabelas indicam chaves estrangeiras (FK).
