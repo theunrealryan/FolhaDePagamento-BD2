@@ -42,7 +42,7 @@ Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em 
 
 4. **Simulação de Cenários Reais**
 
-   * Ao inserir dados de cargos e funcionários com diferentes combinações de salário-base, dependentes, nível de escolaridade e adesão a benefícios (vale-transporte, plano de saúde), os alunos puderam testar cenários múltiplos, aproximando-se da realidade de sistemas de faturamento de grandes organizações.
+   * Ao inserir dados de cargos e funcionários com diferentes combinações de salário-base, dependentes, nível de escolaridade e adesão a benefícios (vale-transporte, plano de saúde), pode-se testar cenários múltiplos, aproximando-se da realidade de sistemas de faturamento de grandes organizações.
 
 ---
 
