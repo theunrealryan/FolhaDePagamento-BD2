@@ -176,7 +176,7 @@ Na imagem abaixo, está representado o **Diagrama Entidade-Relacionamento (DER)*
 ---
 
 **7. Conclusão e Avaliação Crítica**
-O desenvolvimento acadêmico deste sistema de folha de pagamento ofereceu uma experiência prática valiosa para o aluno, ao:
+O desenvolvimento acadêmico deste sistema de folha de pagamento ofereceu uma experiência prática valiosa ao:
 
 * Consolidar conhecimentos teóricos de **modelagem de dados**, **normalização**, e **relacionamentos**.
 * Propiciar domínio de **T-SQL avançado**, incluindo *stored procedures*, tabelas temporárias, cursores e *triggers*.
