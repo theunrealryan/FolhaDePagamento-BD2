@@ -21,7 +21,7 @@ Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em 
    * **Modelagem Conceitual e Lógica**: compreensão de normalização, definição de chaves primárias e estrangeiras, elaboração de relacionamentos um-para-muitos e tabelas de parâmetros.
    * **Programação Avançada em SQL**: domínio de T-SQL para elaboração de *stored procedures* modulares, uso de cursores para iteração sobre conjuntos de dados e criação de *triggers* para auditoria.
    * **Tratamento de Legislação e Regras de Negócio**: aplicação de cálculos complexos (INSS, IRRF, FGTS, anuênio, gratificação por escolaridade) de acordo com normas trabalhistas, demonstrando a capacidade de traduzir requisitos legais em lógica de banco de dados.
-   * **Documentação e Organiza­ção de Repositório**: estruturação de scripts em sequência lógica, comentários claros em cada etapa e padronização de nomenclatura, habilidades valorizadas para controle de versões e trabalho colaborativo.
+   * **Documentação e Organização de Repositório**: estruturação de scripts em sequência lógica, comentários claros em cada etapa e padronização de nomenclatura, habilidades valorizadas para controle de versões e trabalho colaborativo.
 
 ---
 
@@ -29,12 +29,12 @@ Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em 
 
 1. **Modularidade e Reutilização**
 
-   * Cada cálculo de provento, desconto ou encargo foi encapsulado em sua própria ***stored procedure***, o que viabiliza testes unitários isolados e reutilização em outros módulos que demandem regras semelhantes.
+   * Cada cálculo de provento, desconto ou encargo foi encapsulado em sua própria *stored procedure*, o que viabiliza testes unitários isolados e reutilização em outros módulos que demandem regras semelhantes.
    * O procedimento principal (`SP_PRINCIPAL`) atua apenas como orquestrador, invocando rotinas especializadas e agregando resultados em uma tabela temporária. Essa separação de responsabilidades aumenta a coesão e reduz o acoplamento.
 
 2. **Parametrização Flexível**
 
-   * O uso de tabelas auxiliares (`INSS_FAIXAS`, `IRRF_FAIXAS`, `ESCOLARIDADE_PERC`, `PARAMETROS_FIXOS`) concentra valores que, diariamente, são alterados por decretos ou políticas internas da empresa. Dessa forma, ajustes no cálculo de impostos ou benefícios podem ser feitos sem reescrever *stored procedures*.
+   * O uso de tabelas auxiliares (INSS\_FAIXAS, IRRF\_FAIXAS, ESCOLARIDADE\_PERC, PARAMETROS\_FIXOS) concentra valores que, diariamente, são alterados por decretos ou políticas internas da empresa. Dessa forma, ajustes no cálculo de impostos ou benefícios podem ser feitos sem reescrever *stored procedures*.
 
 3. **Auditoria Automática**
 
@@ -51,7 +51,7 @@ Este projeto de sistema de folha de pagamento foi desenvolvido integralmente em 
 1. **Elaboração de Esquema Relacional**
 
    * Definição de tabelas normalizadas (3ª forma normal), chaves primárias e estrangeiras, controladores de integridade referencial e índices implícitos.
-   * Criação de tabelas de parâmetros e de configuração, demonstrando o entendimento de padrões como “lookup tables” e “policy tables” para consta­ntes de negócio.
+   * Criação de tabelas de parâmetros e de configuração, demonstrando o entendimento de padrões como “lookup tables” e “policy tables” para constantes de negócio.
 
 2. **Programação em T-SQL Avançada**
 
@@ -109,7 +109,75 @@ Em síntese, a adoção de **hard code** em certos pontos — valores de deduç�
 
 ---
 
-**6. Conclusão e Avaliação Crítica**
+**6. Diagrama Entidade-Relacionamento (DER)**
+Na imagem abaixo, está representado o **Diagrama Entidade-Relacionamento (DER)** do banco de dados usado no projeto de folha de pagamento. Esse DER ilustra a estrutura de tabelas, seus principais atributos e os relacionamentos que garantem a integridade referencial:
+
+![DER do Projeto de Folha de Pagamento](sandbox:/mnt/data/00132a3f-a470-4dbd-bdca-f8a6b3f94dda.png)
+
+1. **FUNCIONARIOS**
+
+   * **Chave Primária**: `MATRICULA` (varchar(4))
+   * Atributos: `CPF`, `NOME`, `LOCAL_NASC`, `ESCOLARIDADE` (char(1)), `CARGO` (int), `ADMISAO` (date), `NASCIMENTO` (date), `DEPENDENTES` (int), `VALE_TRANSP` (char(1)), `PLANO_SAUDE` (char(1))
+   * **Relacionamentos**:
+
+     * `CARGO` → `CARGOS.CARGO` (FK): cada funcionário está vinculado a um registro em **CARGOS**.
+     * `ESCOLARIDADE` → `ESCOLARIDADE_PERC.nivel` (FK): o nível de escolaridade do funcionário (S, G, E, M, D) referencia a tabela de percentuais de gratificação.
+     * É referenciada em **LOG\_INSERCAO\_FUNCIONARIO** pela coluna `matricula`.
+
+2. **CARGOS**
+
+   * **Chave Primária**: `CARGO` (int)
+   * Atributos: `NOMECARGO` (varchar(40)), `SALARIO` (decimal(10,2))
+   * **Relacionamentos**:
+
+     * Recebe FK de **FUNCIONARIOS.CARGO**, definindo o salário-base associado a cada cargo.
+
+3. **INSS\_FAIXAS**
+
+   * **Chave Primária**: `id` (int, identity)
+   * Atributos: `faixa_ini` (decimal(10,2)), `faixa_fim` (decimal(10,2)), `aliquota` (decimal(5,2)), `valor_fixo` (decimal(10,2))
+   * **Função**: armazena faixas de contribuição ao INSS e o teto de contribuição. Seu relacionamento lógico com **FUNCIONARIOS** (através da *stored procedure* `SP_INSS`) define qual alíquota se aplica ao salário.
+
+4. **IRRF\_FAIXAS**
+
+   * **Chave Primária**: `id` (int, identity)
+   * Atributos: `base_ini` (decimal(10,2)), `base_fim` (decimal(10,2)), `aliquota` (decimal(5,2)), `parcela_deduz` (decimal(10,2))
+   * **Função**: contém as faixas de base de cálculo para o Imposto de Renda Retido na Fonte (IRRF). A *stored procedure* `SP_IRRF` utiliza essas faixas para calcular descontos.
+
+5. **ESCOLARIDADE\_PERC**
+
+   * **Chave Primária**: `nivel` (char(1))
+   * Atributos: `perc` (decimal(5,2))
+   * **Relacionamentos**:
+
+     * `FUNCIONARIOS.ESCOLARIDADE` → `ESCOLARIDADE_PERC.nivel`: define o percentual de gratificação salarial conforme o nível de escolaridade do funcionário.
+
+6. **PARAMETROS\_FIXOS**
+
+   * **Chave Primária**: `chave` (varchar(30))
+   * Atributos: `valor` (decimal(10,2))
+   * **Função**: tabela de configuração que armazena valores fixos (por exemplo: FGTS, vale-cultura, auxílio-alimentação, anuênio, salário-família, percentuais de desconto etc.). Os *stored procedures* de cálculo (como `SP_AuxAlimentacao`, `SP_Anuenio` e `SP_FGTS`) consultam essa tabela para obter valores que podem ser alterados sem modificar a lógica T-SQL.
+
+7. **LOG\_INSERCAO\_FUNCIONARIO**
+
+   * **Chave Primária**: `id_log` (bigint, identity)
+   * Atributos: `data_hora` (datetime), `matricula` (varchar(4)), `nome` (varchar(40))
+   * **Relacionamentos**:
+
+     * `matricula` → `FUNCIONARIOS.MATRICULA` (FK): armazena um registro de auditoria sempre que um novo funcionário é inserido em **FUNCIONARIOS** (via a *trigger* `trg_log_insert_func`).
+    
+![Captura de tela 2025-06-04 210612](https://github.com/user-attachments/assets/61dc50f1-29d6-41f8-9ac0-71590c3b955e)
+
+> **Observações do DER:**
+>
+> * As linhas entre tabelas indicam chaves estrangeiras (FK).
+> * Embora **PARAMETROS\_FIXOS** não tenha uma FK direta, suas entradas são referenciadas indiretamente pelos *stored procedures* que fazem os cálculos de proventos e encargos.
+> * As tabelas de faixas (`INSS_FAIXAS` e `IRRF_FAIXAS`) também não possuem FKs explícitas, mas atuam como lookup tables de parâmetros de cálculo.
+> * O diagrama segue padrão Crow’s Foot, destacando multiplicidades 1\:N: um cargo pode ter vários funcionários; um nível de escolaridade pode ser associado a vários funcionários; cada funcionário pode gerar vários registros de log de inserção.
+
+---
+
+**7. Conclusão e Avaliação Crítica**
 O desenvolvimento acadêmico deste sistema de folha de pagamento ofereceu uma experiência prática valiosa para o aluno, ao:
 
 * Consolidar conhecimentos teóricos de **modelagem de dados**, **normalização**, e **relacionamentos**.
